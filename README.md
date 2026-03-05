@@ -8,6 +8,12 @@
   Menu bar video for two Macs on the same local network.
 </p>
 
+<p align="center">
+  <a href="https://github.com/ashwwwin/glassius/actions/workflows/ci.yml">
+    <img src="https://github.com/ashwwwin/glassius/actions/workflows/ci.yml/badge.svg" alt="CI status" />
+  </a>
+</p>
+
 GlassiusCam is a macOS menu bar app for low-friction, local-only video between two trusted Macs on the same Wi-Fi.
 
 ## Features
