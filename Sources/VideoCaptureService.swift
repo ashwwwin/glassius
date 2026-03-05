@@ -22,6 +22,24 @@ final class VideoCaptureService: NSObject, @unchecked Sendable {
     private let maxFrameBytes = 48 * 1024
     private var runToken: UInt64 = 0
 
+    func warmUp() {
+        sessionQueue.async {
+            switch AVCaptureDevice.authorizationStatus(for: .video) {
+            case .authorized:
+                _ = self.configureSessionIfNeededLocked()
+            case .notDetermined:
+                AVCaptureDevice.requestAccess(for: .video) { [weak self] granted in
+                    guard let self, granted else { return }
+                    self.sessionQueue.async {
+                        _ = self.configureSessionIfNeededLocked()
+                    }
+                }
+            default:
+                break
+            }
+        }
+    }
+
     func start(completion: @escaping @Sendable (Bool) -> Void) {
         sessionQueue.async {
             self.runToken += 1

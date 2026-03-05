@@ -47,6 +47,7 @@ final class AppModel: ObservableObject {
 
     init() {
         bindServices()
+        captureService.warmUp()
         peerService.start()
     }
 

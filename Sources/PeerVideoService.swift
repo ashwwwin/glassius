@@ -34,7 +34,7 @@ final class PeerVideoService: NSObject, @unchecked Sendable {
         let trimmedName = String(localName.prefix(63))
 
         peerID = MCPeerID(displayName: trimmedName)
-        session = MCSession(peer: peerID, securityIdentity: nil, encryptionPreference: .required)
+        session = MCSession(peer: peerID, securityIdentity: nil, encryptionPreference: .optional)
         advertiser = MCNearbyServiceAdvertiser(peer: peerID, discoveryInfo: nil, serviceType: serviceType)
         browser = MCNearbyServiceBrowser(peer: peerID, serviceType: serviceType)
 
@@ -138,7 +138,7 @@ final class PeerVideoService: NSObject, @unchecked Sendable {
         }
 
         invitedPeerKeys.insert(peerKey)
-        browser.invitePeer(peer, to: session, withContext: nil, timeout: 10)
+        browser.invitePeer(peer, to: session, withContext: nil, timeout: 5)
         emitStatus(status)
     }
 
