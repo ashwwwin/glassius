@@ -70,6 +70,10 @@ final class AppModel: ObservableObject {
         localPopoverVisibility = isShown
     }
 
+    func isFullscreenWindowVisible() -> Bool {
+        fullscreenController.isWindowVisible
+    }
+
     func setSessionActive(_ active: Bool) {
         guard active != isSessionActive else { return }
         isSessionActive = active

@@ -98,7 +98,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate, NSM
 
     func popoverDidClose(_ notification: Notification) {
         model.setLocalPopoverVisibility(false)
-        model.setSessionActive(false)
+        if !model.isFullscreenWindowVisible() {
+            model.setSessionActive(false)
+        }
 
         if suppressNextCloseSync {
             suppressNextCloseSync = false

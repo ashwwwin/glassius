@@ -8,6 +8,9 @@ final class FullscreenWindowController: NSObject, NSWindowDelegate {
     var onReturnToMenubarRequested: (() -> Void)?
 
     private var notifyMenubarOnClose = true
+    var isWindowVisible: Bool {
+        window?.isVisible == true
+    }
 
     init(model: AppModel) {
         self.model = model
@@ -49,6 +52,12 @@ final class FullscreenWindowController: NSObject, NSWindowDelegate {
     func windowDidMiniaturize(_ notification: Notification) {
         guard let window = notification.object as? NSWindow else { return }
         window.deminiaturize(nil)
+        notifyMenubarOnClose = true
+        closeWindowAndReturnToMenubar()
+    }
+
+    func windowDidExitFullScreen(_ notification: Notification) {
+        // Exiting fullscreen should close this window and return to menu bar flow.
         notifyMenubarOnClose = true
         closeWindowAndReturnToMenubar()
     }

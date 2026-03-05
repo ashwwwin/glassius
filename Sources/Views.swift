@@ -6,27 +6,16 @@ struct MenuContentView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            ZStack(alignment: .bottomTrailing) {
-                VideoPane(
-                    image: model.remoteFrame,
-                    title: model.connectedPeerNames.isEmpty ? "Friend" : model.connectedPeerNames.joined(separator: ", "),
-                    placeholder: model.connectedPeerNames.isEmpty ? "Waiting for a connection" : "Waiting for remote video"
-                )
-                .frame(width: 390, height: 250)
-
-                VideoPane(
-                    image: model.localFrame,
-                    title: "You",
-                    placeholder: model.localPreviewPlaceholder
-                )
-                .frame(width: 130, height: 98)
-                .padding(10)
-            }
+            VideoPane(
+                image: model.remoteFrame,
+                title: model.connectedPeerNames.isEmpty ? "Friend" : model.connectedPeerNames.joined(separator: ", "),
+                placeholder: model.connectedPeerNames.isEmpty ? "Waiting for a connection" : "Waiting for remote video"
+            )
+            .frame(width: 390, height: 250)
 
             Button("Toggle Fullscreen") {
                 model.toggleFullscreenWindow()
             }
-            .disabled(model.localFrame == nil && model.remoteFrame == nil)
 
             if !model.discoveredPeerNames.isEmpty {
                 ScrollView(.horizontal, showsIndicators: false) {
@@ -60,7 +49,7 @@ struct FullscreenVideoView: View {
     @ObservedObject var model: AppModel
 
     var body: some View {
-        ZStack(alignment: .bottomTrailing) {
+        ZStack {
             Color.black.ignoresSafeArea()
 
             VideoPane(
@@ -69,14 +58,6 @@ struct FullscreenVideoView: View {
                 placeholder: model.connectedPeerNames.isEmpty ? "Waiting for connection" : "Waiting for remote video"
             )
             .padding(24)
-
-            VideoPane(
-                image: model.localFrame,
-                title: "You",
-                placeholder: model.localPreviewPlaceholder
-            )
-            .frame(width: 280, height: 190)
-            .padding(36)
         }
     }
 }
